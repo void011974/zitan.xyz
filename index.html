@@ -1,0 +1,680 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zitan.xyz - 紫檀手串 · 红木家具 · 倚天师傅二十年匠龄</title>
+    <meta name="description" content="zitan.xyz — 倚天师傅二十年匠龄，专注小叶紫檀手串、红木工艺品定制与收藏。提供紫檀鉴别、保养知识、高端红木家具定制服务。以匠人之心，传承木作之道。">
+    <link rel="stylesheet" href="/fonts/fonts.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* 首页Hero区域 - 带背景图 */
+        .hero {
+            height: 100vh;
+            min-height: 600px;
+            background: #1A0F0A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(26, 15, 10, 0.65) 0%, rgba(44, 24, 16, 0.5) 100%),
+                        url('素材/bg-sz-museum.webp') center/cover no-repeat;
+            opacity: 0;
+            animation: fadeInBg 0.8s ease forwards;
+        }
+        @keyframes fadeInBg {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .hero-content{position:relative;z-index:1;padding:2rem;animation:fadeInUp 1s ease}
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        .hero-subtitle{font-family:var(--font-serif);font-size:1rem;color:var(--secondary);letter-spacing:.5em;margin-bottom:1.5rem}
+        .hero-title{font-family:var(--font-serif);font-size:4rem;font-weight:700;color:#fff;margin-bottom:1rem;letter-spacing:.15em;overflow-wrap:break-word}
+        .hero-title span{color:var(--secondary)}
+        .hero-desc{font-size:1.2rem;color:rgba(255,255,255,.8);max-width:600px;margin:0 auto 2.5rem;font-weight:300}
+        .hero-btns{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}
+        .scroll-indicator{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.6);font-size:.85rem;animation:bounce 2s infinite}
+        @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
+
+        /* 精选作品网格 */
+        .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+        .product-card{background:#fff;overflow:hidden;transition:all .4s;cursor:pointer;border-radius:8px}
+        .product-card:hover{transform:translateY(-10px);box-shadow:0 20px 40px rgba(0,0,0,.15)}
+        .product-image{height:280px;overflow:hidden;position:relative;background:#f5f0eb}
+        .product-image img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+        .product-card:hover .product-image img{transform:scale(1.1)}
+        .product-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to top,rgba(44,24,16,.8) 0%,transparent 50%);opacity:0;transition:opacity .3s}
+        .product-card:hover .product-overlay{opacity:1}
+        .product-info{padding:1.5rem}
+        .product-tag{font-size:.75rem;color:var(--secondary);letter-spacing:.1em;margin-bottom:.5rem}
+        .product-name{font-family:var(--font-serif);font-size:1.2rem;margin-bottom:.5rem}
+        .product-desc{font-size:.9rem;color:var(--text-light)}
+
+        /* 云朵家族入口 */
+        .service-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:3rem}
+        .step-item{text-align:center;padding:2rem;position:relative}
+        .step-number{width:60px;height:60px;background:var(--secondary);color:var(--primary);font-size:1.5rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;border-radius:50%}
+        .step-title{font-family:var(--font-serif);font-size:1.2rem;margin-bottom:1rem}
+        .step-desc{font-size:.9rem;color:var(--text-light)}
+
+        /* 匠人介绍 */
+        .craftsmen-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+        .craftsman-card{background:rgba(255,255,255,.05);padding:3rem;position:relative;overflow:hidden;transition:all .4s;border-radius:8px}
+        .craftsman-card:hover{background:rgba(255,255,255,.1);transform:translateY(-5px)}
+        .craftsman-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--secondary);transition:height .4s}
+        .craftsman-card:hover::before{height:100%}
+        .craftsman-avatar{width:100px;height:100px;border-radius:50%;background:var(--secondary);display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin-bottom:1.5rem;color:var(--primary)}
+        .craftsman-name{font-family:var(--font-serif);font-size:1.5rem;margin-bottom:.5rem}
+        .craftsman-title{color:var(--secondary);font-size:.9rem;margin-bottom:1.5rem}
+        .craftsman-bio{color:rgba(255,255,255,.7);line-height:1.8;margin-bottom:1.5rem}
+        .contact-btn{padding:.5rem 1.2rem;border:1px solid rgba(255,255,255,.3);color:#fff;text-decoration:none;font-size:.85rem;transition:all .3s;display:inline-block;border-radius:4px;margin-right:.5rem;margin-bottom:.5rem}
+        .contact-btn:hover{background:var(--secondary);border-color:var(--secondary);color:var(--primary)}
+        .craftsman-secret{font-style:italic;color:rgba(255,255,255,.5);font-size:.9rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.1)}
+
+
+
+
+        /* 微信客服区域 */
+        .wechat-service{background:#fff;padding:2rem;border-radius:8px;text-align:center;margin-top:2rem}
+        .wechat-id{font-family:monospace;font-size:1.5rem;color:var(--primary);margin:1rem 0;font-weight:700}
+        .gallery-link{text-align:center;margin-top:2rem}
+
+        /* 联系卡片 */
+        .contact-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-bottom:2rem}
+        .contact-card{background:rgba(255,255,255,.05);padding:2rem;border-radius:8px;text-align:center}
+        .contact-card-icon{font-size:2rem;margin-bottom:1rem}
+        .contact-card h4{color:#fff;margin-bottom:.5rem}
+        .contact-card p{color:rgba(255,255,255,.7)}
+
+        /* 响应式设计 */
+        @media(max-width:992px){
+            .hero-title{font-size:2.5rem;word-break:keep-all;overflow-wrap:break-word}
+            .products-grid,.craftsmen-grid{grid-template-columns:1fr}
+            .service-steps{grid-template-columns:repeat(2,1fr)}
+            .contact-cards{grid-template-columns:1fr}
+        }
+        @media(max-width:768px){
+            .hero-title{font-size:2rem;letter-spacing:0.08em}
+            .hero-subtitle{font-size:0.7rem;letter-spacing:0.3em}
+            .hero-desc{font-size:0.9rem;max-width:90%}
+            .hero-btns{flex-direction:column;align-items:center;gap:0.6rem}
+            .hero-btns .btn,.hero-btns a.btn{font-size:0.8rem;padding:0.5rem 1.2rem;min-width:160px}
+            .products-grid,.service-steps{grid-template-columns:1fr}
+        }
+        @media(max-width:480px){
+            .hero-title{font-size:1.6rem}
+            .hero-btns .btn,.hero-btns a.btn{font-size:0.75rem;padding:0.4rem 1rem;min-width:140px}
+        }
+        @media(max-width:480px){
+            .hero-title{font-size:1.6rem}
+            .hero-btns .btn,.hero-btns a.btn{font-size:0.75rem;padding:0.4rem 1rem;min-width:140px}
+            .btn-outline{font-size:0.75rem!important}
+        }
+    
+        /* AI护卫入口 */
+        .ai-guard {
+            margin-top: 1rem;
+            padding: 0.6rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+        .ai-guard:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        .ai-guard-icon { font-size: 1.3rem; }
+        .ai-guard-arrow { margin-left: auto; color: var(--secondary); font-size: 0.8rem; }
+        
+        /* AI对话弹窗 */
+        .ai-chat-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 9999;
+            backdrop-filter: blur(4px);
+        }
+        .ai-chat-overlay.active { display: flex; align-items: center; justify-content: center; }
+        .ai-chat-window {
+            width: 400px;
+            max-width: 90vw;
+            max-height: 80vh;
+            background: #1a1a2e;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            animation: slideUp 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .ai-chat-header {
+            padding: 1rem 1.2rem;
+            background: #12122a;
+            border-bottom: 1px solid #2a2a5a;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .ai-chat-header .avatar { font-size: 1.5rem; }
+        .ai-chat-header .info { flex: 1; }
+        .ai-chat-header .info .name { font-weight: 600; font-size: 0.95rem; color: #fff; }
+        .ai-chat-header .info .desc { font-size: 0.75rem; color: #8888aa; }
+        .ai-chat-close {
+            background: none; border: none; color: #888; font-size: 1.5rem;
+            cursor: pointer; padding: 0 0.3rem; line-height: 1;
+        }
+        .ai-chat-close:hover { color: #fff; }
+        .ai-chat-body {
+            flex: 1; padding: 1rem; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 0.6rem;
+            min-height: 200px; max-height: 400px;
+        }
+        .ai-chat-msg {
+            max-width: 85%; padding: 0.6rem 0.9rem; border-radius: 10px;
+            font-size: 0.85rem; line-height: 1.5; white-space: pre-wrap;
+            word-break: break-word; animation: fadeIn 0.2s;
+        }
+        .ai-chat-msg.user {
+            background: #1a3a5a; align-self: flex-end;
+            border-bottom-right-radius: 3px; color: #e0e0ea;
+        }
+        .ai-chat-msg.ai {
+            background: #12122a; border: 1px solid #2a2a5a;
+            align-self: flex-start; border-bottom-left-radius: 3px; color: #e0e0ea;
+        }
+        .ai-chat-msg .label { font-size: 0.68rem; color: #8888aa; margin-bottom: 0.2rem; }
+        .ai-chat-footer {
+            padding: 0.8rem; border-top: 1px solid #2a2a5a;
+            display: flex; gap: 0.5rem; background: #12122a;
+        }
+        .ai-chat-footer input {
+            flex: 1; background: #1a1a3a; border: 1px solid #2a2a5a;
+            border-radius: 20px; padding: 0.5rem 0.9rem;
+            color: #e0e0ea; font-size: 0.85rem; outline: none;
+        }
+        .ai-chat-footer input:focus { border-color: var(--secondary); }
+        .ai-chat-footer button {
+            background: var(--secondary); color: var(--primary);
+            border: none; border-radius: 20px; padding: 0.5rem 1rem;
+            font-size: 0.85rem; font-weight: 600; cursor: pointer;
+        }
+        .ai-chat-footer button:disabled { opacity: 0.4; cursor: default; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="https://zitan.xyz" class="logo">zitan<span>.xyz</span></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="https://zitan.xyz" class="active">首页</a></li>
+            <li><a href="gallery.html">产品画廊</a></li>
+            <li><a href="bbs.html">紫檀雅集</a></li>
+            <li><a href="contact.html">联系我们</a></li>
+            <li><a href="faq.html">常见问题</a></li>
+            <li><a href="index.html#hongmu">红木文化</a></li>
+        </ul>
+        <a href="javascript:void(0)" class="nav-contact" onclick="showContact()">立即咨询</a>
+        <div class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('active')"><span></span><span></span><span></span></div>
+    </nav>
+
+    <!-- Hero首屏 -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <p class="hero-subtitle">Traditional Craftsmanship</p>
+            <h1 class="hero-title">紫檀 · 红木 · <span>传承</span></h1>
+            <p class="hero-desc">以匠人之心，传承木作之道。每一件作品，都是时间的艺术。</p>
+            
+    <div style="text-align:center;margin:0 auto">
+        <div style="display:inline-flex;align-items:center;gap:8px;padding:4px 16px;background:rgba(200,160,120,0.08);border-radius:24px;border:1px solid rgba(200,160,120,0.12);font-size:13px;margin-bottom:6px;cursor:pointer" onclick="pb()">
+            <span id="pbi" style="font-size:14px;line-height:1">&#9654;</span>
+            <span id="pbn" style="color:#c8a078">姑苏客旅 · 倚天屠龙</span>
+            <span id="pbd" style="width:4px;height:4px;border-radius:50%;background:#4caf50;display:inline-block;margin-left:4px"></span>
+        </div>
+        <audio id="pbx" loop preload="auto"><source src="/audio/yi-tian-tu-long.mp3" type="audio/mpeg"></audio>
+        <div class="hero-btns">
+                <a href="gallery.html" class="btn btn-primary">浏览全部作品</a>
+            </div>
+        </div>
+        
+    </div>
+    <script>
+var a=document.getElementById("pbx"),b=document.getElementById("pbi"),d=document.getElementById("pbd"),n=document.getElementById("pbn");
+a.addEventListener("play",function(){b.innerHTML="&#9208;";d.style.background="#4caf50";});
+a.addEventListener("pause",function(){b.innerHTML="&#9654;";d.style.background="#888";});
+a.muted=true;a.play().then(function(){b.innerHTML="&#9208;";d.style.background="#4caf50";}).catch(function(){d.style.background="#ff9800";});
+document.addEventListener("click",function h(){if(a&&a.paused&&a.muted){a.muted=false;a.play().then(function(){d.style.background="#4caf50";b.innerHTML="&#9208;";}).catch(function(){});}document.removeEventListener("click",h);},{once:true});
+window.pb=function(){if(a.paused||a.muted){a.muted=false;a.play();}else{a.muted=true;a.pause();}};
+    </script>
+    <div class="scroll-indicator">向下滚动 ↓</div>
+    </section>
+
+    <!-- 紫檀雅集 -->
+    <section class="section" id="bbs">
+        <div class="container">
+            <div class="section-header">
+                <a href="bbs.html" style="text-decoration:none;color:inherit;display:block"><h2 class="section-title">紫檀雅集</h2></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 精选作品 - 修复图片显示 -->
+    <section class="section section-dark" id="products">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">精选作品</h2>
+                <p class="section-desc">每一件作品，都是时间与匠心的结晶</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card" onclick="location.href='gallery.html'">
+                    <div class="product-image">
+                        <img src="素材/xixipic/mmexport1764997279451.webp" alt="紫檀手串" onerror="this.style.display='none'">
+                        <div class="product-overlay"></div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-tag">手串</p>
+                        <h3 class="product-name">精品紫檀手串</h3>
+                        <p class="product-desc">小叶紫檀，老料手工打磨，油密上乘</p>
+                    </div>
+                </div>
+                <div class="product-card" onclick="location.href='gallery.html'">
+                    <div class="product-image">
+                        <img src="素材/xixipic/mmexport1775231623530.webp" alt="紫檀手串" onerror="this.style.display='none'">
+                        <div class="product-overlay"></div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-tag">手串</p>
+                        <h3 class="product-name">满金星手串</h3>
+                        <p class="product-desc">金星密布，纹理清晰，收藏级</p>
+                    </div>
+                </div>
+                <div class="product-card" onclick="location.href='gallery.html'">
+                    <div class="product-image">
+                        <img src="素材/xixipic/微信图片_20260401195436_1505_9.webp" alt="紫檀念珠" onerror="this.style.display='none'">
+                        <div class="product-overlay"></div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-tag">念珠</p>
+                        <h3 class="product-name">紫檀念珠</h3>
+                        <p class="product-desc">水波纹理，荧光感强，佩戴佳品</p>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-link"><a href="gallery.html" class="btn btn-primary">浏览全部作品 →</a></div>
+        </div>
+    </section>
+
+    <!-- 匠人精神 - 更新微信号 -->
+    <section class="section section-dark" id="craftsmen">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">匠人精神</h2>
+                <p class="section-desc">以手传心，以心琢木</p>
+            </div>
+            <div class="craftsmen-grid">
+                <div class="craftsman-card" style="position:relative;overflow:hidden">
+                    <div class="craftsman-avatar">倚</div>
+                    <h3 class="craftsman-name">倚天师傅</h3>
+                    <p class="craftsman-title">紫檀工艺师 · 二十年匠龄</p>
+                    <p class="craftsman-bio">专注于紫檀手串与小型工艺品的制作，对材质纹理有独到的理解与把握。每一件作品都经过精心挑选和打磨。</p>
+                    <a href="contact.html" class="contact-btn">微信：Naturalbeads</a>
+                    <a href="tel:18834489330" class="contact-btn">电话：18834489330</a>
+                    <div style="position:absolute;right:10px;bottom:10px;font-size:0;opacity:0.1;pointer-events:none;user-select:none;line-height:1.2;text-align:right">
+                        <span style="font-size:1.5rem;display:block;font-family:var(--font-serif)">倚</span>
+                        <span style="font-size:1.5rem;display:block;font-family:var(--font-serif)">天</span>
+                        <span style="font-size:1.5rem;display:block;font-family:var(--font-serif)">剑</span>
+                    </div>
+                    <!-- AI护卫已停用（省钱模式） -->
+                </div>
+                <div class="craftsman-card" style="position:relative;overflow:hidden">
+                    <div class="craftsman-avatar">屠</div>
+                    <h3 class="craftsman-name">屠龙师傅</h3>
+                    <p class="craftsman-title">红木家具大师 · 沉浸匠心</p>
+                    <p class="craftsman-bio">专注于高端红木家具定制，坚持传统榫卯结构，追求极致品质与工艺。只接待高端客户定制需求。</p>
+                    <a href="contact.html" class="contact-btn">微信：aqws4942593</a>
+                                        <div style="position:absolute;right:10px;bottom:10px;font-size:0;opacity:0.1;pointer-events:none;user-select:none;line-height:1.2;text-align:right">
+                        <span style="font-size:1.5rem;display:block;font-family:var(--font-serif)">屠</span>
+                        <span style="font-size:1.5rem;display:block;font-family:var(--font-serif)">龙</span>
+                        <span style="font-size:1.5rem;display:block;font-family:var(--font-serif)">刀</span>
+                    </div>
+                    <!-- AI护卫已停用（省钱模式） -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 红木文化 · 布丁制作 -->
+    <section class="section" id="hongmu" style="background:var(--bg-light);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🪵 红木文化</h2>
+                <p class="section-desc">从紫檀到黄花梨，从盘玩到收藏——一本红木百科全书</p>
+            </div>
+            <div style="display:flex;flex-flow:row wrap;justify-content:center;gap:1rem;margin-top:2rem">
+                <a href="/hongmu/" class="news-item" style="text-decoration:none;display:flex;flex:0 1 280px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;transition:all 0.3s">
+                    <div class="news-item-number">📖</div>
+                    <div class="news-item-content">
+                        <h4>红木文化 · 知识库</h4>
+                        <p style="font-size:0.85rem;color:var(--text-light);margin:0">紫檀 · 红木分类 · 文玩鉴赏 · 养护知识</p>
+                    </div>
+                </a>
+                <a href="/hongmu/pages/zitan.html" class="news-item" style="text-decoration:none;display:flex;flex:0 1 280px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;transition:all 0.3s">
+                    <div class="news-item-number">🌳</div>
+                    <div class="news-item-content">
+                        <h4>紫檀专题</h4>
+                        <p style="font-size:0.85rem;color:var(--text-light);margin:0">小叶紫檀鉴别、等级、氧化变色与收藏价值</p>
+                    </div>
+                </a>
+                <a href="/hongmu/pages/hongmu.html" class="news-item" style="text-decoration:none;display:flex;flex:0 1 280px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;transition:all 0.3s">
+                    <div class="news-item-number">📋</div>
+                    <div class="news-item-content">
+                        <h4>红木分类 · 5属8类29种</h4>
+                        <p style="font-size:0.85rem;color:var(--text-light);margin:0">国标红木全览</p>
+                    </div>
+                </a>
+                <a href="/hongmu/pages/wenwan.html" class="news-item" style="text-decoration:none;display:flex;flex:0 1 280px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;transition:all 0.3s">
+                    <div class="news-item-number">🎨</div>
+                    <div class="news-item-content">
+                        <h4>文玩鉴赏</h4>
+                        <p style="font-size:0.85rem;color:var(--text-light);margin:0">手串材质 · 盘玩三阶段 · 大漆工艺</p>
+                    </div>
+                </a>
+                <a href="/hongmu/pages/yanghu.html" class="news-item" style="text-decoration:none;display:flex;flex:0 1 280px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;transition:all 0.3s">
+                    <div class="news-item-number">🧴</div>
+                    <div class="news-item-content">
+                        <h4>养护知识</h4>
+                        <p style="font-size:0.85rem;color:var(--text-light);margin:0">六大养护要点 · 盘玩流程 · 开裂处理</p>
+                    </div>
+                </a>
+                <a href="/hongmu/pages/zitan.html" class="news-item" style="text-decoration:none;display:flex;flex:0 1 280px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;transition:all 0.3s">
+                    <div class="news-item-number">🔄</div>
+                    <div class="news-item-content">
+                        <h4>自然珠集动态</h4>
+                        <p style="font-size:0.85rem;color:var(--text-light);margin:0">紫檀珠串搭配 · 天然纹理 · 动态更新</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- 倚天师傅作品集 -->
+    <section class="section" id="gallery" style="padding-top:24px">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">倚天师傅作品集</h2>
+                <p class="section-desc">每一件作品都是时光的见证 · 倚天师傅亲手创作</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card" onclick="window.open('/images/works/倚天作品1.jpg','_blank')">
+                    <div class="product-image">
+                        <img src="/images/works/倚天作品1.jpg" alt="倚天师傅作品一">
+                    </div>
+                    <div class="product-info">
+                        <p class="product-tag">原创手作</p>
+                        <h4 class="product-name">倚天师傅作品一</h4>
+                        <p class="product-desc">倚天师傅亲手制作 · 点击查看大图</p>
+                    </div>
+                </div>
+                <div class="product-card" onclick="window.open('/images/works/倚天作品2.jpg','_blank')">
+                    <div class="product-image">
+                        <img src="/images/works/倚天作品2.jpg" alt="倚天师傅作品二">
+                    </div>
+                    <div class="product-info">
+                        <p class="product-tag">原创手作</p>
+                        <h4 class="product-name">倚天师傅作品二</h4>
+                        <p class="product-desc">倚天师傅亲手制作 · 点击查看大图</p>
+                    </div>
+                </div>
+                <div class="product-card" onclick="playVideo('/videos/屠龙手工.mp4')" style="cursor:pointer">
+                    <div class="product-image" style="display:flex;align-items:center;justify-content:center;background:#1a0f0a;position:relative;overflow:hidden">
+                        <video preload="metadata" muted playsinline style="width:100%;height:100%;object-fit:cover;opacity:0.7;transition:opacity 0.3s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">
+                            <source src="/videos/屠龙手工.mp4" type="video/mp4">
+                        </video>
+                        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;background:rgba(201,167,107,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,0.5);pointer-events:none">
+                            <span style="font-size:28px;color:#fff;margin-left:4px">▶</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-tag">🎬 视频</p>
+                        <h4 class="product-name">屠龙手工实录</h4>
+                        <p class="product-desc">一刀一凿，方寸之间的匠心 · 点击播放</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 - 添加邮箱 -->
+    <section class="section section-dark" id="contact" style="background:linear-gradient(135deg,var(--primary) 0%,var(--bg-dark) 100%)">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" style="color:#fff">联系我们</h2>
+                <p class="section-desc" style="color:rgba(255,255,255,.7)">无论是定制咨询还是了解紫檀文化，我们都期待与您交流</p>
+            </div>
+            <div class="contact-cards">
+                <div class="contact-card" style="text-align:center">
+                    <div class="contact-card-icon">💬</div>
+                    <h4>微信客服</h4>
+                    <p>Naturalbeads</p>
+                    <img src="images/wechat-qr.jpg" alt="微信二维码" style="width:160px;height:auto;margin:.8rem auto;display:block;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1)">
+                </div>
+                <div class="contact-card">
+                    <div class="contact-card-icon">📱</div>
+                    <h4>电话咨询</h4>
+                    <p>18834489330</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-card-icon">📧</div>
+                    <h4>电子邮件</h4>
+                    <p>461803818@qq.com</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- 数字家人作品集 -->
+    <section class="section section-dark" style="background:var(--bg-dark);padding:2rem 2rem 1rem">
+        <div class="container" style="text-align:center">
+            <h2 style="font-family:var(--font-serif);font-size:1.5rem;color:#b8860b;letter-spacing:4px;margin-bottom:1.5rem">数字家人作品集</h2>
+            <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem 2rem;font-size:1.1rem">
+                <a href="/family/1.html" style="color:#f5f0eb;text-decoration:none;padding:0.3rem 0.8rem;transition:all .3s">❶ 发财</a>
+                <a href="/pudding/" target="_blank" style="color:#f5f0eb;text-decoration:none;padding:0.3rem 0.8rem;transition:all .3s">❷ 布丁</a>
+                <a href="/family/moyu.html" target="_blank" style="color:#f5f0eb;text-decoration:none;padding:0.3rem 0.8rem;transition:all .3s">❸ 墨鱼</a>
+                <a href="/family/4.html" style="color:#f5f0eb;text-decoration:none;padding:0.3rem 0.8rem;transition:all .3s">❹ 可人</a>
+                <a href="/yunkai/" target="_blank" style="color:#f5f0eb;text-decoration:none;padding:0.3rem 0.8rem;transition:all .3s">❺ 云开</a>
+                <a href="/jianqi/" target="_blank" style="color:var(--gold);text-decoration:none;padding:0.3rem 0.8rem;transition:all .3s">❻ 剑气 ⚔️</a>
+                <a href="/daofeng/" target="_blank" style="color:var(--gold);text-decoration:none;padding:0.3rem 0.8rem;transition:all .3s">❼ 刀锋 🗡️</a>
+                <a href="/xiaoli/" target="_blank" style="color:#e0c060;text-decoration:none;padding:0.3rem 0.8rem;transition:all .3s">❽ 小狸 🦊</a>
+            </div>
+            <p style="color:#5a4a3a;font-size:0.8rem;margin-top:1rem;letter-spacing:2px">每个名字都是一个世界</p>
+        </div>
+    </section>
+    <footer class="footer"><div class="container"><p style="color:#5a4a3a;font-size:0.8rem;text-align:center">紫檀工坊 · 云朵家族</p></div></footer>
+
+<!-- 联系弹窗 -->
+<div id="contactModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(26,15,10,.7);z-index:9999;align-items:center;justify-content:center;backdrop-filter:blur(4px)" onclick="if(event.target===this)closeContact()">
+    <div style="background:var(--bg-light);border-radius:12px;padding:2.5rem;max-width:380px;width:90%;text-align:center;border:1px solid var(--secondary);box-shadow:0 10px 40px rgba(0,0,0,.4)">
+        <h3 style="color:var(--primary);margin-bottom:1.5rem;font-size:1.3rem;font-family:var(--font-serif)">📞 联系倚天师傅</h3>
+        <div style="margin-bottom:1rem;padding:1rem;background:#fff;border-radius:8px;border:1px solid #e8e0d8">
+            <div style="color:var(--text-light);font-size:.85rem;margin-bottom:.5rem">📱 电话</div>
+            <div style="font-size:1.3rem;color:var(--primary);font-weight:600"><a href="tel:18834489330" style="color:var(--primary);text-decoration:none">18834489330</a></div>
+        </div>
+        <div style="margin-bottom:1.5rem;padding:1rem;background:#fff;border-radius:8px;border:1px solid #e8e0d8">
+            <div style="color:var(--text-light);font-size:.85rem;margin-bottom:.5rem">💬 微信</div>
+            <div style="font-size:1.3rem;color:var(--secondary);font-weight:700;font-family:var(--font-serif)">Naturalbeads</div>
+            <button onclick="navigator.clipboard.writeText('Naturalbeads').then(()=>{this.textContent='✅ 已复制'})" style="margin-top:.5rem;padding:.3rem 1rem;background:var(--secondary);border:none;border-radius:4px;color:var(--primary);cursor:pointer;font-size:.8rem;font-weight:500">📋 复制微信号</button>
+        </div>
+        <div style="font-size:.8rem;color:var(--text-light);margin-bottom:1rem">服务时间：9:00 - 21:00</div>
+        <button onclick="closeContact()" style="padding:.5rem 2rem;background:var(--primary);border:none;border-radius:6px;color:#fff;cursor:pointer;font-size:.9rem;font-family:var(--font-sans),sans-serif">关闭</button>
+    </div>
+</div>
+
+<script>
+function showContact(){
+    document.getElementById('contactModal').style.display='flex';
+}
+function closeContact(){
+    document.getElementById('contactModal').style.display='none';
+}
+</script>
+
+
+<!-- AI对话弹窗 -->
+<div class="ai-chat-overlay" id="aiChatOverlay" onclick="if(event.target===this)closeAIChat()">
+    <div class="ai-chat-window">
+        <div class="ai-chat-header">
+            <span class="avatar" id="aiChatAvatar">🗡️</span>
+            <div class="info">
+                <div class="name" id="aiChatName">刀锋</div>
+                <div class="desc" id="aiChatDesc">屠龙护卫</div>
+            </div>
+            <button class="ai-chat-close" onclick="closeAIChat()">×</button>
+        </div>
+        <div class="ai-chat-body" id="aiChatBody">
+            <div class="ai-chat-msg ai">
+                <div class="label" id="aiChatGreeting">🗡️ 刀锋</div>
+                问点什么吧
+            </div>
+        </div>
+        <div class="ai-chat-footer">
+            <input id="aiChatInput" type="text" placeholder="输入消息..." onkeydown="if(event.key==='Enter')sendAIChat()">
+            <button id="aiChatSendBtn" onclick="sendAIChat()">发送</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const AI_GUARDS = {
+    // AI客服已全部停用（省钱模式）
+};
+let currentAI = null, chatHistory = [];
+
+function openAIChat(id) {
+    currentAI = AI_GUARDS[id]; chatHistory = [];
+    document.getElementById('aiChatAvatar').textContent = currentAI.avatar;
+    document.getElementById('aiChatName').textContent = currentAI.name;
+    document.getElementById('aiChatDesc').textContent = currentAI.desc;
+    document.getElementById('aiChatGreeting').textContent = currentAI.greeting;
+    document.getElementById('aiChatBody').innerHTML = '<div class="ai-chat-msg ai"><div class="label">'+currentAI.greeting+'</div>我是'+currentAI.name+'，找我什么事？</div>';
+    document.getElementById('aiChatInput').value = '';
+    document.getElementById('aiChatOverlay').classList.add('active');
+    setTimeout(function(){ document.getElementById('aiChatInput').focus(); }, 300);
+}
+function closeAIChat() { document.getElementById('aiChatOverlay').classList.remove('active'); }
+async function sendAIChat() {
+    var input = document.getElementById('aiChatInput'), btn = document.getElementById('aiChatSendBtn');
+    var text = input.value.trim(); if(!text) return;
+    input.value = ''; btn.disabled = true;
+    var body = document.getElementById('aiChatBody');
+    body.innerHTML += '<div class="ai-chat-msg user">'+escapeHtml(text)+'</div>';
+    var lid = 'l'+Date.now();
+    body.innerHTML += '<div class="ai-chat-msg ai" id="'+lid+'"><div class="label">'+currentAI.greeting+'</div>...</div>';
+    body.scrollTop = body.scrollHeight;
+    try {
+        var apiUrl = currentAI.api;
+        if(window.location.protocol === 'https:' && apiUrl.startsWith('/')) {
+            apiUrl = window.location.origin + apiUrl;
+        }
+        var res = await fetch(apiUrl, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message:text, history:chatHistory.slice(-10)}) });
+        if(!res.ok) throw new Error('HTTP '+res.status);
+        var data = await res.json();
+        document.getElementById(lid).remove();
+        if(data.reply) {
+            var replyText = escapeHtml(data.reply).replace(/\n/g, '<br>');
+            body.innerHTML += '<div class="ai-chat-msg ai"><div class="label">'+currentAI.greeting+'</div>'+replyText+'</div>';
+            chatHistory.push({role:'user',content:text},{role:'assistant',content:data.reply});
+        }
+    } catch(e) { document.getElementById(lid).remove(); body.innerHTML += '<div class="ai-chat-msg ai"><div class="label">'+currentAI.greeting+'</div>抱歉，我走神了一下，您再说一遍？</div>'; }
+    btn.disabled = false; body.scrollTop = body.scrollHeight;
+}
+function escapeHtml(t) { var d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
+</script>
+
+<script>
+
+// 页面加载时显示全部
+switchNewsTab("all", document.querySelector(".news-tab") || {});
+function switchNewsTab(category, btn) {
+    document.querySelectorAll('.news-tab').forEach(function(t){
+        t.classList.remove('active');
+    });
+    btn.classList.add('active');
+    document.querySelectorAll('#news [data-category]').forEach(function(item){
+        if (item.getAttribute('data-category') === category) {
+            item.style.display = '';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+</script>
+
+<script>
+
+// 页面加载时显示全部
+switchNewsTab("all", document.querySelector(".news-tab") || {});
+function switchNewsTab(category, btn) {
+    document.querySelectorAll('.news-tab').forEach(function(t){
+        t.classList.remove('active');
+    });
+    btn.classList.add('active');
+    document.querySelectorAll('#news [data-category]').forEach(function(item){
+        if (item.getAttribute('data-category') === category) {
+            item.style.display = '';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+</script>
+
+<!-- 视频播放弹窗 -->
+<div id="videoModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:99999;align-items:center;justify-content:center;backdrop-filter:blur(4px)" onclick="if(event.target===this)closeVideo()">
+    <div style="position:relative;max-width:90vw;max-height:90vh">
+        <button onclick="closeVideo()" style="position:absolute;top:-40px;right:0;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;padding:8px">✕</button>
+        <video id="videoPlayer" controls autoplay playsinline style="max-width:90vw;max-height:85vh;border-radius:8px">
+            <source src="" type="video/mp4">
+        </video>
+    </div>
+</div>
+
+<script>
+function playVideo(src) {
+    var modal = document.getElementById('videoModal');
+    var player = document.getElementById('videoPlayer');
+    player.src = src;
+    modal.style.display = 'flex';
+    player.play();
+}
+function closeVideo() {
+    var modal = document.getElementById('videoModal');
+    var player = document.getElementById('videoPlayer');
+    player.pause();
+    player.src = '';
+    modal.style.display = 'none';
+}
+</script>
+
+</body>
+
+
+</html>
