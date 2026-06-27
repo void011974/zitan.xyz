@@ -1,0 +1,21 @@
+# 云朵工厂聊天室 - 子域名 chat.zitan.xyz
+# ⚠️ 使用前需要在 DNS 添加 A 记录: chat.zitan.xyz -> 82.156.123.28
+server {
+    listen 80;
+    server_name chat.zitan.xyz;
+    
+    location / {
+        proxy_pass http://127.0.0.1:9910;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_read_timeout 86400;
+        proxy_buffering off;
+    }
+}
+
+# 也支持通过主域名 /chat 路径访问
+# 但 WebSocket 最好用独立子域名
