@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我们 · 倚天师傅 · 屠龙师傅 - zitan.xyz</title>
+    <meta name="description" content="联系倚天师傅（微信 Naturalbeads / 电话 18834489330）咨询紫檀手串定制；联系屠龙师傅咨询高端红木家具定制。">
+    <link rel="stylesheet" href="/fonts/fonts.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .contact-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin:4rem 0}
+        .contact-info h3{font-family:var(--font-serif);font-size:1.8rem;margin-bottom:1rem}
+        .contact-info > p{color:var(--text-light);margin-bottom:2rem}
+        .contact-item{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.5rem;padding:1rem;background:#fff;border-radius:8px}
+        .contact-icon{width:50px;height:50px;background:var(--secondary);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;border-radius:50%}
+        .contact-item h4{font-size:1rem;margin-bottom:.3rem}
+        .contact-item p{color:var(--text-light);font-size:.9rem}
+        .contact-item a{color:var(--primary);text-decoration:none}
+        .contact-item a:hover{color:var(--secondary)}
+        .wechat-card{background:linear-gradient(135deg,var(--primary) 0%,var(--bg-dark) 100%);color:#fff;padding:2rem;border-radius:8px;margin-top:2rem;text-align:center}
+        .wechat-card h4{font-family:var(--font-serif);font-size:1.3rem;margin-bottom:.5rem}
+        .wechat-card p{opacity:.8;font-size:.9rem;margin-bottom:1rem}
+        .wechat-qr{width:200px;height:200px;margin:1rem auto;border-radius:8px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;padding:10px}
+        .wechat-qr img{width:100%;height:100%;object-fit:contain;border-radius:4px}
+        .wechat-id{font-size:1.8rem;font-weight:700;color:var(--secondary);margin:1rem 0;font-family:monospace}
+        .copy-btn{background:var(--secondary);color:var(--primary);border:none;padding:.8rem 2rem;font-size:1rem;font-weight:600;cursor:pointer;border-radius:4px;transition:all .3s}
+        .copy-btn:hover{background:#D4A017}
+        @media(max-width:992px){.contact-wrapper{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">zitan<span>.xyz</span></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="/hongmu/">云朵宇宙</a></li>
+            <li><a href="gallery.html">产品画廊</a></li><li><a href="bbs.html">紫檀雅集</a></li><li><a href="contact.html" class="active">联系我们</a></li>
+            <li><a href="faq.html">常见问题</a></li>
+            <li><a href="index.html#news">资讯中心</a></li>
+            
+        </ul>
+        <a href="#contactForm" class="nav-contact">立即咨询</a>
+        <div class="menu-toggle" onclick="document.getElementById("navLinks").classList.toggle("active")"><span></span><span></span><span></span></div>
+    </nav>
+    <section class="page-hero" style="background:linear-gradient(135deg, rgba(26, 15, 10, 0.8) 0%, rgba(44, 24, 16, 0.7) 100%), url("素材/bg-sz-museum.webp") center/cover no-repeat">
+        <div class="page-hero-content"><h1>联系我们</h1><p>期待与您交流关于紫檀与红木的一切</p></div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="contact-wrapper" id="contactForm">
+                <div class="contact-info">
+                    <h3>扫码添加微信客服</h3>
+                    <p>微信咨询更便捷，可直接发送产品图片</p>
+
+                    <div class="wechat-card">
+                        <div class="wechat-qr">
+                            <img src="/images/wechat-qr.jpg" alt="微信客服二维码" onerror="this.style.display="none"">
+                        </div>
+                        <div class="wechat-id">Naturalbeads</div>
+                        <button class="copy-btn" onclick="copyWechat()">📋 复制微信号</button>
+                    </div>
+                </div>
+
+                <div class="contact-info">
+                    <h3>其他联系方式</h3>
+                    <p>也可以使用以下方式联系我们</p>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div><h4>电话咨询</h4><p>服务时间：9:00 - 21:00<br><a href="tel:18834489330">18834489330</a>（倚天师傅）</p></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div><h4>电子邮件</h4><p>24小时内回复<br><a href="mailto:461803818@qq.com">461803818@qq.com</a></p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer"><div class="container"><p>以匠人之心，传承木作之道。</p></div></footer>
+    <script>
+        function copyWechat(){navigator.clipboard.writeText("Naturalbeads").then(()=>{const btn=document.querySelector(".copy-btn");btn.textContent="✅ 已复制"}).catch(()=>{const inp=document.createElement("input");inp.value="Naturalbeads";document.body.appendChild(inp);inp.select();document.execCommand("copy");document.body.removeChild(inp);alert("微信号 Naturalbeads 已复制")})}
+    </script>
+</body>
+</html>
