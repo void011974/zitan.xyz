@@ -1,0 +1,37 @@
+# cloudnest.zitan.xyz - HTTP
+server {
+    if ($host = cloudnest.zitan.xyz) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name cloudnest.zitan.xyz;
+    return 301 https://$host$request_uri;
+
+
+}
+
+# cloudnest.zitan.xyz - HTTPS
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name cloudnest.zitan.xyz;
+    ssl_certificate /etc/letsencrypt/live/cloudnest.zitan.xyz/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/cloudnest.zitan.xyz/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    root /var/www/cloudnest;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~* \.(jpg|jpeg|png|gif|ico|webp|svg|css|js|woff2?)$ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+
+}
