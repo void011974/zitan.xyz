@@ -1,0 +1,373 @@
+/* =============================================
+   🗡️ 刀锋 · 极简对称 · 江湖水墨
+   仙剑古风 · 对称轴美学 · 启功体风骨
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700;900&display=swap');
+
+:root {
+  --ink: #1a1a1a;
+  --ink-light: #3a3a3a;
+  --paper: #f5f0e8;
+  --paper-dark: #e8e0d0;
+  --vermillion: #e85d4a;
+  --gold: #e0c060;
+  --gold-dim: #c9a84c;
+  --text: rgba(255,240,220,0.9);
+  --text-muted: rgba(255,240,220,0.5);
+  --border: rgba(255,240,220,0.15);
+  --serif: 'Ma Shan Zheng', 'Noto Serif SC', 'STKaiti', 'KaiTi', serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  /* 首页body设为overflow:hidden，文章页单独设置 */
+}
+
+body {
+  font-family: var(--serif);
+  background: #1a1410;
+  color: var(--text);
+  position: relative;
+}
+
+/* ====== 背景图 - 你发的图 ====== */
+.bg-image {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url('bg.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  filter: brightness(0.6);
+}
+
+/* =============================================
+   首页专属（一屏锁定）
+   ============================================= */
+.home {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18vh 5vw 0;
+  text-align: center;
+}
+
+/* 四角装饰 */
+.corner {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-color: var(--gold-dim);
+  opacity: 0.3;
+}
+.corner-tl { top: 4%; left: 5%; border-top: 1px solid; border-left: 1px solid; }
+.corner-tr { top: 4%; right: 5%; border-top: 1px solid; border-right: 1px solid; }
+
+/* 中央轴线 */
+.axis-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 72%;
+  background: linear-gradient(to bottom, transparent 0%, var(--gold-dim) 20%, var(--gold-dim) 80%, transparent 100%);
+  opacity: 0.1;
+}
+
+/* 主标题 */
+.main-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 6vh;
+  position: relative;
+}
+
+.title-char {
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  line-height: 1;
+  font-family: var(--serif);
+}
+
+.title-char--sm {
+  font-size: clamp(30px, 6vw, 52px);
+  color: var(--ink-light);
+  margin-bottom: -0.06em;
+}
+
+.title-char--lg {
+  font-size: clamp(68px, 16vw, 140px);
+  color: var(--ink);
+  letter-spacing: 0.2em;
+  text-shadow: 2px 2px 0 rgba(201,168,76,0.1);
+}
+
+/* 标题下方细线 */
+.main-title::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 1px;
+  background: var(--gold-dim);
+  margin-top: 1.2em;
+  opacity: 0.25;
+}
+
+/* 文章链接 */
+.article-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8em;
+  width: 100%;
+  max-width: 320px;
+}
+
+.link-card {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  width: 100%;
+  padding: 0.8em 1.2em;
+  text-decoration: none;
+  color: var(--text);
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.25);
+  transition: all 0.3s ease;
+  font-family: var(--serif);
+  font-size: 1.05em;
+}
+
+.link-card:hover {
+  border-color: var(--gold);
+  background: rgba(255,255,255,0.5);
+  transform: translateY(-1px);
+}
+
+.link-num {
+  font-size: 0.8em;
+  color: var(--vermillion);
+  font-weight: 700;
+  opacity: 0.55;
+  min-width: 1.6em;
+  text-align: center;
+}
+
+.link-text {
+  flex: 1;
+  font-size: 1em;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+.link-arrow {
+  font-size: 0.8em;
+  color: var(--gold-dim);
+  opacity: 0.35;
+  transition: opacity 0.3s;
+}
+.link-card:hover .link-arrow { opacity: 1; }
+
+/* 底部落款 */
+.footer-seal {
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.3;
+  z-index: 2;
+}
+.seal-text {
+  font-size: 0.75em;
+  color: var(--text-muted);
+  letter-spacing: 0.15em;
+}
+
+/* ====== 响应式首页 ====== */
+@media (max-width: 480px) {
+  .corner { width: 16px; height: 16px; }
+  .link-card { padding: 0.7em 1em; }
+  .home { padding-top: 16vh; }
+}
+
+/* =============================================
+   文章/日记页面（可滚动阅读 · 大字体）
+   ============================================= */
+
+/* 包裹容器：让页面可滚动 */
+.page-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+  position: relative;
+  z-index: 1;
+  background: #1a1410;
+}
+
+.page {
+  padding: 2.5em 1.5em 3em;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* 返回键 - 加大 */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  margin-bottom: 2em;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 1em;
+  letter-spacing: 0.05em;
+  transition: color 0.3s;
+  font-family: var(--serif);
+}
+.back-link:hover { color: var(--vermillion); }
+.back-link::before { content: '← '; }
+
+.page-chapter {
+  font-size: 0.9em;
+  color: var(--vermillion);
+  opacity: 0.5;
+  letter-spacing: 0.3em;
+  margin-bottom: 0.5em;
+}
+
+.page-title {
+  font-size: 1.8em;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.3em;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+  font-family: var(--serif);
+}
+
+.page-meta {
+  font-size: 0.85em;
+  color: var(--text-muted);
+  margin-bottom: 2em;
+  font-style: italic;
+  letter-spacing: 0.05em;
+}
+
+/* 文章正文 - 大字体照顾老年人 */
+.page-body {
+  font-size: 1.1em;
+  line-height: 2.2;
+  color: var(--text);
+}
+
+.page-body p {
+  text-indent: 2em;
+  margin-bottom: 1em;
+}
+.page-body p:first-of-type { text-indent: 0; }
+.page-body strong { color: var(--vermillion); }
+
+.page-sign {
+  text-align: right;
+  text-indent: 0 !important;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 2em;
+  font-size: 1em;
+}
+
+/* 页面底部导航 */
+.page-footer {
+  text-align: center;
+  margin-top: 2.5em;
+  padding-top: 1.5em;
+  border-top: 1px solid var(--border);
+}
+
+.page-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  color: var(--gold-dim);
+  text-decoration: none;
+  font-size: 0.9em;
+  letter-spacing: 0.05em;
+  transition: color 0.3s;
+  font-family: var(--serif);
+}
+.page-footer a:hover { color: var(--vermillion); }
+
+/* 日记列表 */
+.diary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.diary-entry {
+  padding: 1.2em 1em;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.2);
+  transition: all 0.3s;
+}
+.diary-entry:hover {
+  border-color: var(--gold);
+  background: rgba(255,255,255,0.4);
+}
+
+.diary-date {
+  font-size: 0.85em;
+  color: var(--text-muted);
+  margin-bottom: 0.2em;
+  letter-spacing: 0.03em;
+}
+
+.diary-title {
+  font-size: 1.1em;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.5em;
+  letter-spacing: 0.04em;
+  font-family: var(--serif);
+}
+
+.diary-body {
+  font-size: 1em;
+  line-height: 2;
+  color: var(--text);
+}
+.diary-body p { text-indent: 2em; margin-bottom: 0.35em; }
+.diary-body p:first-of-type { text-indent: 0; }
+
+.diary-meta {
+  font-size: 0.85em;
+  color: var(--gold-dim);
+  margin-top: 0.4em;
+  font-style: italic;
+}
+
+.diary-footer-text {
+  text-align: center;
+  margin-top: 2.5em;
+  font-size: 0.9em;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  font-style: italic;
+}
+
+@media (max-width: 480px) {
+  .page { padding: 1.5em 0.8em 2em; }
+  .page-body { font-size: 1.05em; }
+  .diary-entry { padding: 0.8em 0.6em; }
+}
