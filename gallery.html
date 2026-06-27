@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>紫檀手串 · 红木家具产品画廊 - zitan.xyz</title>
+    <meta name="description" content="欣赏倚天师傅与屠龙师傅的全手工紫檀手串、念珠、红木家具作品。142件匠心之作，每一件都是独一无二的时间艺术。">
+    <link rel="stylesheet" href="/fonts/fonts.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .gallery-controls{display:flex;justify-content:center;gap:1rem;margin-bottom:3rem;flex-wrap:wrap}
+        .filter-btn{padding:.8rem 2rem;background:#fff;border:1px solid #ddd;cursor:pointer;font-size:.95rem;transition:all .3s;border-radius:4px;font-family:var(--font-sans),sans-serif}
+        .filter-btn.active,.filter-btn:hover{background:var(--secondary);color:var(--primary);border-color:var(--secondary)}
+        .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.5rem}
+        .gallery-item{position:relative;overflow:hidden;border-radius:8px;cursor:pointer;aspect-ratio:1;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+        .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+        .gallery-item:hover img{transform:scale(1.1)}
+        .gallery-item::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to top,rgba(44,24,16,.8) 0%,transparent 60%);opacity:0;transition:opacity .3s;z-index:1}
+        .gallery-item:hover::before{opacity:1}
+        .gallery-item::after{content:'🔍';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);width:50px;height:50px;background:rgba(255,255,255,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:transform .3s;z-index:2}
+        .gallery-item:hover::after{transform:translate(-50%,-50%) scale(1)}
+        .gallery-info{position:absolute;bottom:0;left:0;right:0;padding:1rem;color:#fff;z-index:1;transform:translateY(100%);transition:transform .3s}
+        .gallery-item:hover .gallery-info{transform:translateY(0)}
+        .gallery-info h4{font-family:var(--font-serif);font-size:1rem;margin-bottom:.3rem}
+        .gallery-info p{font-size:.85rem;opacity:.8}
+        .gallery-count{text-align:center;color:var(--text-light);margin-top:2rem;font-size:.9rem}
+        .gallery-more{text-align:center;margin-top:2rem}
+        .lightbox{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.95);z-index:2000;align-items:center;justify-content:center;padding:2rem}
+        .lightbox.active{display:flex}
+        .lightbox img{max-width:90%;max-height:90vh;object-fit:contain;border-radius:8px}
+        .lightbox-close{position:absolute;top:1.5rem;right:1.5rem;color:#fff;font-size:2rem;cursor:pointer;width:50px;height:50px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1);border-radius:50%;transition:all .3s}
+        .lightbox-close:hover{background:rgba(255,255,255,.2)}
+        .lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:2rem;cursor:pointer;width:50px;height:50px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1);border-radius:50%;transition:all .3s}
+        .lightbox-nav:hover{background:rgba(255,255,255,.2)}
+        .lightbox-prev{left:1.5rem}.lightbox-next{right:1.5rem}
+        .lightbox-counter{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);color:#fff;font-size:.9rem;background:rgba(0,0,0,.5);padding:.5rem 1rem;border-radius:20px}
+        .loading{text-align:center;padding:3rem;color:var(--text-light)}
+        .category-stats{display:flex;justify-content:center;gap:2rem;margin-bottom:2rem;flex-wrap:wrap}
+        .stat-item{background:#fff;padding:.8rem 1.5rem;border-radius:30px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+        .stat-item span{color:var(--secondary);font-weight:700}
+        @media(max-width:768px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">zitan<span>.xyz</span></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">首页</a></li>
+            
+            <li><a href="gallery.html" class="active">产品画廊</a></li>
+            <li><a href="bbs.html">紫檀雅集</a></li>
+            <li><a href="contact.html">联系我们</a></li>
+            <li><a href="faq.html">常见问题</a></li>
+            <li><a href="index.html#news">资讯中心</a></li>
+            
+        </ul>
+        <a href="contact.html" class="nav-contact">立即咨询</a>
+        <div class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('active')"><span></span><span></span><span></span></div>
+    </nav>
+
+    <section class="page-hero" style="background:linear-gradient(135deg, rgba(26, 15, 10, 0.8) 0%, rgba(44, 24, 16, 0.7) 100%), url('素材/bg-sz-museum.webp') center/cover no-repeat">
+        <div class="page-hero-content">
+            <h1>产品画廊</h1>
+            <p>紫檀手串 · 念珠 · 红木工艺品</p>
+        </div>
+    </section>
+
+    <section class="section" style="background:var(--bg-light)">
+        <div class="container">
+            <div class="gallery-grid" id="galleryGrid"></div>
+            <p class="gallery-count">共 <span id="totalCount">0</span> 张作品</p>
+            <div class="gallery-more"><button class="btn btn-outline" onclick="loadMore()" id="loadMoreBtn" style="border-color:var(--primary);color:var(--primary)">加载更多</button></div>
+        </div>
+    </section>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">×</span>
+        <span class="lightbox-nav lightbox-prev" onclick="prevImage()">‹</span>
+        <span class="lightbox-nav lightbox-next" onclick="nextImage()">›</span>
+        <img id="lightboxImg" src="" alt="">
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
+    <footer class="footer"><div class="container"><p>以匠人之心，传承木作之道。</p></div></footer>
+
+    <script>
+        // 仅存在的图片文件（webp格式），不分类，直接展示
+        const galleryFiles = [
+        "zitan-01.webp", "zitan-02.webp", "zitan-03.webp", "zitan-04.webp", "zitan-05.webp",
+        "zitan-06.webp", "zitan-07.webp", "zitan-08.webp", "zitan-09.webp", "zitan-10.webp",
+        "zitan-11.webp", "zitan-12.webp", "zitan-13.webp", "zitan-14.webp", "zitan-15.webp",
+        "zitan-16.webp", "zitan-17.webp", "zitan-18.webp", "zitan-19.webp", "zitan-20.webp",
+        "zitan-21.webp", "zitan-22.webp", "zitan-23.webp", "zitan-24.webp", "zitan-25.webp",
+        "zitan-26.webp", "zitan-27.webp", "zitan-28.webp", "zitan-29.webp", "zitan-30.webp",
+        "zitan-31.webp", "zitan-32.webp", "zitan-33.webp", "zitan-34.webp", "zitan-35.webp",
+        "zitan-36.webp", "zitan-37.webp", "zitan-38.webp", "zitan-39.webp", "zitan-40.webp",
+        "zitan-41.webp", "zitan-42.webp", "zitan-43.webp", "mmexport1764997279451.webp", "mmexport1775231623530.webp",
+        "mmexport1775231638319.webp", "mmexport1775231647953.webp", "mmexport1775231652694.webp", "mmexport1775231657188.webp", "mmexport1775231670146.webp",
+        "mmexport1775231681646.webp", "mmexport1775231689450.webp", "mmexport1775231693301.webp", "mmexport1775231722075.webp", "mmexport1775231763790.webp",
+        "mmexport1775231845281.webp", "mmexport1775231878681.webp", "mmexport1775231887174.webp", "mmexport1775231891762.webp", "mmexport1775231977152.webp",
+        "mmexport1775231990856.webp", "mmexport1775540303854.webp", "mmexport1775540308623.webp", "mmexport1775540321720.webp", "mmexport1775540335003.webp",
+        "mmexport1775540342873.webp", "mmexport1775540346569.webp", "mmexport1775540350154.webp", "mmexport1775540357438.webp", "mmexport1775540363994.webp",
+        "mmexport1775540370234.webp", "mmexport1775540373631.webp", "mmexport1775540392106.webp", "mmexport1775540434894.webp", "mmexport1775540477600.webp",
+        "mmexport1775540512939.webp", "mmexport1775540516333.webp", "mmexport1775540535016.webp", "mmexport1775540609503.webp", "mmexport1775540629703.webp",
+        "\u5fae\u4fe1\u56fe\u7247_20260401195436_1505_9.webp", "\u5fae\u4fe1\u56fe\u7247_20260401195437_1506_9.webp", "\u5fae\u4fe1\u56fe\u7247_20260401195440_1507_9.webp", "\u5fae\u4fe1\u56fe\u7247_20260401195441_1509_9.webp", "\u5fae\u4fe1\u56fe\u7247_20260401195450_1512_9.webp",
+        "\u5fae\u4fe1\u56fe\u7247_20260401195453_1513_9.webp", "\u5fae\u4fe1\u56fe\u7247_20260401195457_1514_9.webp", "\u5fae\u4fe1\u56fe\u7247_20260401195501_1515_9.webp", "\u5fae\u4fe1\u56fe\u7247_20260401195508_1517_9.webp", "\u5fae\u4fe1\u56fe\u7247_20260401195511_1519_9.webp",
+        "\u5fae\u4fe1\u56fe\u7247_20260401195512_1520_9.webp", "\u5fae\u4fe1\u56fe\u7247_20260401195517_1521_9.webp", "\u5fae\u4fe1\u56fe\u7247_20260401195518_1522_9.webp", "\u5fae\u4fe1\u56fe\u7247_20260401195522_1523_9.webp", "\u5fae\u4fe1\u56fe\u7247_20260401195528_1525_9.webp",
+        "\u5fae\u4fe1\u56fe\u7247_20260401195537_1527_9.webp", "\u5fae\u4fe1\u56fe\u7247_20260401195620_1534_9.webp", "\u5fae\u4fe1\u56fe\u7247_20260401195628_1536_9.webp"
+        ];
+
+        const basePath = '素材/xixipic/';
+        let displayCount = 0;
+        const pageSize = 24;
+
+        function loadGallery() {
+            const grid = document.getElementById('galleryGrid');
+
+            if (displayCount === 0) {
+                grid.innerHTML = '';
+            }
+
+            const fragment = document.createDocumentFragment();
+            const endIndex = Math.min(displayCount + pageSize, galleryFiles.length);
+
+            for (let i = displayCount; i < endIndex; i++) {
+                const file = galleryFiles[i];
+                const div = document.createElement('div');
+                div.className = 'gallery-item';
+                div.onclick = function() { openLightbox(this.dataset.index); };
+                div.dataset.index = i;
+                div.innerHTML = '<img src="' + basePath + file + '" alt="紫檀作品" loading="lazy">' +
+                    '<div class="gallery-info"><h4>紫檀作品</h4></div>';
+                fragment.appendChild(div);
+            }
+
+            grid.appendChild(fragment);
+            displayCount = endIndex;
+
+            document.getElementById('totalCount').textContent = galleryFiles.length;
+            document.querySelector('.hero p').textContent = '紫檀手串 · 念珠 · 红木工艺品';
+
+            const moreBtn = document.getElementById('loadMoreBtn');
+            if (displayCount >= galleryFiles.length) {
+                moreBtn.style.display = 'none';
+            } else {
+                moreBtn.style.display = 'inline-block';
+            }
+        }
+
+        function loadMore() {
+            loadGallery();
+        }
+
+        function openLightbox(index) {
+            const file = galleryFiles[index];
+            document.getElementById('lightboxImg').src = basePath + file;
+            document.getElementById('lightbox').classList.add('active');
+            document.getElementById('lightbox').dataset.currentIndex = index;
+            document.getElementById('lightboxCounter').textContent = (index + 1) + ' / ' + galleryFiles.length;
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        function prevImage() {
+            let index = parseInt(document.getElementById('lightbox').dataset.currentIndex);
+            index = (index - 1 + galleryFiles.length) % galleryFiles.length;
+            openLightbox(index);
+        }
+
+        function nextImage() {
+            let index = parseInt(document.getElementById('lightbox').dataset.currentIndex);
+            index = (index + 1) % galleryFiles.length;
+            openLightbox(index);
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') prevImage();
+                if (e.key === 'ArrowRight') nextImage();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadGallery();
+        });</script>
+</body>
+</html>
