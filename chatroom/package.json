@@ -1,0 +1,15 @@
+{
+  "name": "chatroom",
+  "version": "2.0.0",
+  "description": "云朵聊天室集群 — 多房间 WebSocket 中继服务",
+  "main": "launcher.js",
+  "scripts": {
+    "start": "node launcher.js",
+    "start:factory": "node server.js factory",
+    "start:deepcloud": "node server.js deepcloud"
+  },
+  "dependencies": {
+    "ws": "^8.21.0",
+    "xml2js": "^0.6.2"
+  }
+}
