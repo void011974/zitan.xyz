@@ -1,0 +1,76 @@
+# Default server - IP direct access
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index index.html index.htm;
+
+    server_name _;
+
+    location = / {
+        try_files /index.html =404;
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # X-UI management panel
+    location /xui/ {
+        proxy_pass http://127.0.0.1:54321/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 86400;
+        proxy_buffering off;
+    }
+
+    # AI护卫对话 - 云开(网络工程师)
+    location /api/ai/yunkai/chat {
+        proxy_pass http://127.0.0.1:9914/chat;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        add_header Access-Control-Allow-Origin *;
+    }
+    # AI护卫对话 - 刀锋(屠龙护卫)
+    location /api/ai/daofeng/chat {
+        proxy_pass http://127.0.0.1:9915/chat;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        add_header Access-Control-Allow-Origin *;
+    }
+    # AI护卫对话 - 剑气(倚天护卫)
+    location /api/ai/jianqi/chat {
+        proxy_pass http://127.0.0.1:9916/chat;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        add_header Access-Control-Allow-Origin *;
+    }
+
+
+
+    # 云朵宇宙导航站
+    location /hub/ {
+        alias /var/www/hub/public/;
+        index index.html;
+    }
+
+
+
+
+
+    # Text base
+    location /textbase {
+        return 301 /textbase.html;
+    }
+
+    # 云朵宇宙导航站 - 直接访问
+    location = /hub {
+        return 301 /hub/;
+    }
+}
