@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📄 文本基地 · 云朵宇宙</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
+    background: #0a0a1a;
+    color: #e0e0ea;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+.header {
+    max-width: 680px;
+    width: 100%;
+    padding: 2rem 0 1rem;
+    text-align: center;
+}
+.header h1 { font-size: 1.6rem; }
+.header h1 span { color: #f0c040; }
+.header .rule {
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 0.5rem;
+    line-height: 1.8;
+}
+
+/* 上传区域 */
+.upload-area {
+    max-width: 680px;
+    width: 100%;
+    background: #12122a;
+    border: 2px dashed #2a2a5a;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 0.5rem;
+}
+.upload-area:hover, .upload-area.dragover {
+    border-color: #f0c040;
+    background: #1a1a3a;
+}
+.upload-area .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+.upload-area .hint { font-size: 0.9rem; color: #888; }
+.upload-area .sub-hint { font-size: 0.75rem; color: #555; margin-top: 0.3rem; }
+.upload-area input[type="file"] { display: none; }
+
+/* 文件列表 */
+.file-list {
+    max-width: 680px;
+    width: 100%;
+    margin-top: 1rem;
+    flex: 1;
+}
+.file-item {
+    background: #12122a;
+    border: 1px solid #2a2a5a;
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: all 0.2s;
+    animation: fadeIn 0.3s;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.file-item:hover { border-color: #4a4a8a; }
+.file-icon { font-size: 1.4rem; }
+.file-info { flex: 1; }
+.file-name { font-size: 0.9rem; font-weight: 600; word-break: break-all; }
+.file-meta { font-size: 0.72rem; color: #666; margin-top: 0.2rem; }
+.file-download {
+    color: #88bbff;
+    text-decoration: none;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid #3a5a8a;
+    border-radius: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.file-download:hover { background: #1a3a5a; border-color: #88bbff; }
+
+.empty-tip {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 2;
+}
+.empty-tip .big { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
+
+/* 上传进度/状态 */
+.upload-status {
+    max-width: 680px;
+    width: 100%;
+    margin-top: 0.5rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #888;
+    display: none;
+}
+.upload-status.active { display: block; }
+.upload-status.success { color: #66cc88; }
+.upload-status.error { color: #ff5555; }
+
+.footer {
+    padding: 1rem;
+    color: #555;
+    font-size: 0.72rem;
+    text-align: center;
+    margin-top: auto;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>📄 文本<span>基地</span></h1>
+    <div class="rule">
+        只接收 .txt 文件 · 单文件不超过 200KB<br>
+        文件名自动加日期编号 · 保存7天自动删除
+    </div>
+</div>
+
+<div class="upload-area" id="uploadArea">
+    <div class="icon">📄</div>
+    <div class="hint">点击或拖拽上传 .txt 文件</div>
+    <div class="sub-hint">单文件 ≤ 200KB · 仅限纯文本</div>
+    <input type="file" id="fileInput" accept=".txt">
+</div>
+
+<div class="upload-status" id="uploadStatus"></div>
+
+<div class="file-list" id="fileList">
+    <div class="empty-tip" id="emptyTip">
+        <span class="big">📄</span>
+        还没有人上传文件<br>上传第一个吧
+    </div>
+</div>
+
+<div class="footer">
+    只接收 .txt · 200KB上限 · 7天自动清除
+</div>
+
+<script>
+const API = '/api/textbase';
+
+// 上传区域点击事件
+document.getElementById('uploadArea').addEventListener('click', function() {
+    document.getElementById('fileInput').click();
+});
+
+// 拖拽上传
+const uploadArea = document.getElementById('uploadArea');
+uploadArea.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    this.classList.add('dragover');
+});
+uploadArea.addEventListener('dragleave', function() {
+    this.classList.remove('dragover');
+});
+uploadArea.addEventListener('drop', function(e) {
+    e.preventDefault();
+    this.classList.remove('dragover');
+    const files = e.dataTransfer.files;
+    if (files.length > 0) uploadFile(files[0]);
+});
+
+// 选择文件上传
+document.getElementById('fileInput').addEventListener('change', function() {
+    if (this.files.length > 0) uploadFile(this.files[0]);
+    this.value = '';
+});
+
+// 上传文件
+async function uploadFile(file) {
+    const status = document.getElementById('uploadStatus');
+    
+    // 校验类型
+    if (!file.name.toLowerCase().endsWith('.txt')) {
+        showStatus('只接受 .txt 格式文件', 'error');
+        return;
+    }
+    
+    // 校验大小
+    if (file.size > 200 * 1024) {
+        showStatus('文件超过200KB限制', 'error');
+        return;
+    }
+    
+    showStatus('上传中...', '');
+    
+    try {
+        // 读取文件内容为base64
+        const reader = new FileReader();
+        const content = await new Promise((resolve, reject) => {
+            reader.onload = () => {
+                const base64 = reader.result.split(',')[1];
+                resolve(base64);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+        
+        const res = await fetch(API + '/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fileName: file.name, content: content })
+        });
+        
+        const data = await res.json();
+        if (data.ok) {
+            showStatus(`✅ ${data.file.displayName} 上传成功`, 'success');
+            loadFiles();
+        } else {
+            showStatus('❌ ' + (data.error || '上传失败'), 'error');
+        }
+    } catch (e) {
+        showStatus('❌ 网络错误', 'error');
+    }
+}
+
+function showStatus(msg, type) {
+    const el = document.getElementById('uploadStatus');
+    el.textContent = msg;
+    el.className = 'upload-status active' + (type ? ' ' + type : '');
+    if (type === 'success') {
+        setTimeout(() => { el.className = 'upload-status'; }, 3000);
+    }
+}
+
+// 加载文件列表
+async function loadFiles() {
+    try {
+        const res = await fetch(API);
+        const files = await res.json();
+        renderFiles(files);
+    } catch {}
+}
+
+function renderFiles(files) {
+    const container = document.getElementById('fileList');
+    if (files.length === 0) {
+        container.innerHTML = '<div class="empty-tip"><span class="big">📄</span>还没有人上传文件<br>上传第一个吧</div>';
+        return;
+    }
+    
+    let html = '';
+    files.forEach(f => {
+        const sizeStr = f.size < 1024 ? f.size + 'B' : (f.size / 1024).toFixed(1) + 'KB';
+        // 计算剩余天数
+        const age = Date.now() - f.uploadTime;
+        const daysLeft = Math.max(0, Math.ceil(7 - age / (24*60*60*1000)));
+        
+        html += `
+            <div class="file-item">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <div class="file-name">${escapeHtml(f.displayName)}</div>
+                    <div class="file-meta">${sizeStr} · ${f.timeStr} · 剩余${daysLeft}天</div>
+                </div>
+                <a href="${API}/download?id=${f.id}" class="file-download" download>下载</a>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+}
+
+function escapeHtml(t) { var d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
+
+// 初始加载
+loadFiles();
+// 每30秒刷新
+setInterval(loadFiles, 30000);
+</script>
+</body>
+</html>
