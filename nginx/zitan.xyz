@@ -1,0 +1,114 @@
+# zitan.xyz - HTTP (跳转到HTTPS)
+server {
+    listen 80;
+    server_name zitan.xyz www.zitan.xyz;
+    return 301 https://$host$request_uri;
+}
+
+# zitan.xyz - HTTPS
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name zitan.xyz www.zitan.xyz;
+
+    ssl_certificate /etc/letsencrypt/live/zitan.xyz/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/zitan.xyz/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    root /var/www/html;
+    index index.html index.htm;
+
+    # 安全头
+    add_header X-Frame-Options SAMEORIGIN always;
+    add_header X-Content-Type-Options nosniff always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy strict-origin-when-cross-origin always;
+
+    location / {
+        try_files $uri $uri/ =404;
+location /hub/ {
+            alias /var/www/hub/public/;
+            try_files $uri $uri/ =404;
+        }
+        location /api/ {
+            proxy_pass http://127.0.0.1:3001/;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+
+        # 布丁的小站 - 静态文件
+        location = /pudding { return 301 /pudding/; }
+        location /pudding/ {
+            alias /var/www/html/pudding/;
+            try_files $uri $uri/ $uri.html =404;
+        }
+        location /pudding/api/ {
+            proxy_pass http://127.0.0.1:3002/api/;
+            proxy_http_version 1.1;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+
+    # X-UI 管理面板
+    location /xui/ {
+        proxy_pass http://127.0.0.1:54321/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 86400;
+        proxy_buffering off;
+    }
+
+
+
+    # Xray WebSocket 反向代理
+    location /cloud {
+        proxy_pass http://127.0.0.1:8443;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 86400;
+        proxy_buffering off;
+    }
+
+
+    # 文本基地 - 通过443访问
+    location /api/ {
+        proxy_pass http://127.0.0.1:9913;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    # 云开的网站（极简对称美学）
+    location /yunkai/ {
+        alias /var/www/html/yunkai/;
+        try_files $uri $uri/ =404;
+    }
+
+    # 墨鱼哥客服信息页（纯静态，AI已下线）
+    location /moyu/ {
+        alias /var/www/html/moyu/;
+        try_files $uri $uri/ =404;
+    }
+
+    # AI护卫对话 - 已下线（停止AI服务以节省费用）
+
+
+}
