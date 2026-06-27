@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小狸的屋檐</title>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --night: #0f0f1a;
+      --night2: #1a1a2e;
+      --roof: #2a1f1a;
+      --roof-light: #3d3028;
+      --moon: #f0e6c0;
+      --moon-glow: rgba(240,230,192,0.08);
+      --star: rgba(240,230,192,0.4);
+      --text: rgba(240,235,225,0.9);
+      --text-muted: rgba(200,190,175,0.35);
+      --warm: #e8c88a;
+      --font: 'Klee One', 'Noto Serif SC', 'KaiTi', serif;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html,body { width:100%; height:100%; overflow:hidden; }
+    body {
+      font-family: var(--font);
+      background: var(--night);
+      color: var(--text);
+    }
+
+    /* 夜空背景 */
+    .sky {
+      position: fixed; inset:0; z-index:0;
+      background: linear-gradient(175deg, var(--night) 0%, var(--night2) 50%, #151520 100%);
+    }
+
+    /* 星星 */
+    .stars {
+      position: fixed; inset:0; z-index:1;
+      pointer-events: none;
+    }
+    .star {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: var(--star);
+      border-radius: 50%;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+    @keyframes twinkle {
+      0%,100% { opacity:0.2; }
+      50% { opacity:0.8; }
+    }
+
+    /* 月亮 */
+    .moon-wrap {
+      position: fixed; top:6%; right:10%; z-index:2;
+      pointer-events: none;
+    }
+    .moon {
+      width: clamp(60px,8vw,90px); height: clamp(60px,8vw,90px);
+      background: var(--moon);
+      border-radius: 50%;
+      box-shadow: 0 0 40px var(--moon-glow), 0 0 80px rgba(240,230,192,0.04);
+      position: relative;
+    }
+    .moon::after {
+      content: '';
+      position: absolute; top:-4px; left:12px;
+      width: 20px; height: 20px;
+      background: rgba(15,15,26,0.4);
+      border-radius: 50%;
+    }
+
+    /* 瓦片屋顶 */
+    .roof {
+      position: fixed; bottom:0; left:0; right:0; z-index:3;
+      height: 30vh;
+      pointer-events: none;
+    }
+    .roof-bg {
+      position: absolute; bottom:0; left:0; right:0;
+      height: 100%;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          transparent 0px,
+          transparent 48px,
+          var(--roof) 48px,
+          var(--roof) 52px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          var(--roof) 0px,
+          var(--roof) 30px,
+          var(--roof-light) 30px,
+          var(--roof-light) 32px
+        );
+      clip-path: polygon(0 40%, 5% 35%, 10% 38%, 15% 33%, 20% 37%, 25% 32%, 30% 36%, 35% 31%, 40% 35%, 45% 30%, 50% 34%, 55% 29%, 60% 33%, 65% 28%, 70% 32%, 75% 27%, 80% 31%, 85% 26%, 90% 30%, 95% 25%, 100% 29%, 100% 100%, 0 100%);
+    }
+
+    /* 屋脊 - 小狸蹲的地方 */
+    .ridge {
+      position: fixed; bottom: 28vh; left: 50%; z-index:4;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+    .xiaoli-avatar {
+      display: block;
+      font-size: clamp(60px,12vw,100px);
+      line-height: 1;
+      animation: tailSway 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(240,230,192,0.06));
+    }
+    @keyframes tailSway {
+      0%,100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+
+    /* 标题 */
+    .title-section {
+      position: fixed;
+      left: 8%;
+      top: 42%;
+      transform: translateY(-50%);
+      z-index: 5;
+    }
+    .title-line {
+      font-size: clamp(36px,7vw,64px);
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.12em;
+      line-height: 1.2;
+      text-shadow: 0 0 30px rgba(240,230,192,0.06);
+    }
+    .title-sub {
+      font-size: clamp(11px,1.5vw,14px);
+      color: var(--warm);
+      letter-spacing: 0.1em;
+      margin-top: 6px;
+      opacity: 0.5;
+    }
+
+    /* 日记入口 */
+    .center-link {
+      position: fixed;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      text-align: center;
+    }
+    .diary-link {
+      font-size: clamp(16px,2.5vw,24px);
+      color: var(--warm);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: all 0.4s;
+      display: inline-block;
+      padding: 12px 32px;
+      border: 1.5px solid rgba(232,200,138,0.12);
+      border-radius: 50px;
+      background: rgba(20,18,28,0.4);
+      backdrop-filter: blur(6px);
+    }
+    .diary-link:hover {
+      border-color: rgba(232,200,138,0.3);
+      background: rgba(30,28,38,0.6);
+      transform: scale(1.04);
+    }
+
+    /* 底部 */
+    .footer {
+      position: fixed;
+      bottom: calc(28vh + 30px);
+      left: 0; right: 0; z-index:5;
+      text-align: center;
+      font-size: clamp(10px,1.3vw,13px);
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    @media (max-width: 640px) {
+      .title-section { left: 5%; top: 38%; }
+      .diary-link { font-size: 14px; padding: 10px 22px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 夜空 -->
+  <div class="sky"></div>
+
+  <!-- 星星 -->
+  <div class="stars" id="stars"></div>
+
+  <!-- 月亮 -->
+  <div class="moon-wrap"><div class="moon"></div></div>
+
+  <!-- 瓦片屋顶 -->
+  <div class="roof"><div class="roof-bg"></div></div>
+
+  <!-- 屋脊上的小狸 -->
+  <div class="ridge"><span class="xiaoli-avatar">🦊</span></div>
+
+  <!-- 标题 -->
+  <div class="title-section">
+    <div class="title-line">小狸的屋檐</div>
+    <div class="title-sub">长得像狐狸，其实是猫 · 不听话，但认家</div>
+  </div>
+
+  <a href="https://zitan.xyz" style="position:fixed;top:6%;left:5%;z-index:10;color:rgba(232,200,138,0.5);text-decoration:none;font-size:14px;letter-spacing:0.08em;transition:color 0.3s;font-family:var(--font);cursor:pointer" onmouseover="this.style.color='#e8c88a'" onmouseout="this.style.color='rgba(232,200,138,0.5)'">← 紫檀总部</a>
+  <!-- 日记入口 -->
+  <div class="center-link">
+    <a href="diary.html" class="diary-link">📖 小狸的困惑日记 →</a>
+  </div>
+
+  <!-- 底部 -->
+  <div class="footer">屋檐底下 · 月光照进来 · 尾巴轻轻晃</div>
+
+  <script>
+    // 生成星星
+    const container = document.getElementById('stars');
+    for (let i = 0; i < 60; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 70 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      star.style.animationDuration = (2 + Math.random() * 3) + 's';
+      star.style.width = star.style.height = (1 + Math.random() * 2) + 'px';
+      container.appendChild(star);
+    }
+  </script>
+</body>
+</html>
