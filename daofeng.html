@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🗡️ 刀锋 — 你的带刀侍卫已就位</title>
+    <style>
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -1px); }
+            60% { transform: translate(-1px, 1px); }
+            80% { transform: translate(1px, -1px); }
+            100% { transform: translate(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(233,69,96,0.3); }
+            50% { box-shadow: 0 0 40px rgba(233,69,96,0.8); }
+        }
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to bottom, transparent, rgba(233,69,96,0.08), transparent);
+            animation: scanline 4s linear infinite;
+            pointer-events: none;
+            z-index: 999;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .blade-icon {
+            font-size: 72px;
+            display: block;
+            margin-bottom: 10px;
+            animation: glitch 3s infinite;
+        }
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #e94560, #a29bfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            color: #888;
+            font-size: 14px;
+            margin-top: 8px;
+            letter-spacing: 3px;
+        }
+        .terminal-box {
+            background: #111118;
+            border: 1px solid #2a2a3a;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            animation: pulse 3s infinite;
+        }
+        .terminal-box::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #e94560, #a29bfe, #e94560);
+            background-size: 300% 300%;
+            z-index: -1;
+            animation: pulse 3s ease infinite;
+        }
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #2a2a3a;
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-red { background: #e94560; }
+        .dot-yellow { background: #feca57; }
+        .dot-green { background: #2ed573; }
+        .terminal-label {
+            color: #666;
+            font-size: 12px;
+            margin-left: auto;
+        }
+        .message {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        .message .tag {
+            color: #a29bfe;
+        }
+        .message .highlight {
+            color: #e94560;
+            font-weight: bold;
+        }
+        .message .green {
+            color: #2ed573;
+        }
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background: #e94560;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        .callout {
+            background: rgba(233,69,96,0.08);
+            border: 1px solid rgba(233,69,96,0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .callout h3 {
+            color: #e94560;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .callout p {
+            color: #aaa;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .info-item {
+            background: #1a1a25;
+            border: 1px solid #2a2a3a;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .info-item .label {
+            color: #666;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        .info-item .value {
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #e94560, #a29bfe);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(233,69,96,0.4);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: #a29bfe;
+            border: 1px solid #a29bfe;
+        }
+        .btn-secondary:hover {
+            background: rgba(162,155,254,0.1);
+        }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .audio-controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .audio-controls button {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: 1px solid #2a2a3a;
+            background: #1a1a25;
+            color: #e94560;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .audio-controls button:hover {
+            background: rgba(233,69,96,0.15);
+            border-color: #e94560;
+        }
+        .footer {
+            text-align: center;
+            color: #444;
+            font-size: 12px;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #1a1a25;
+        }
+        .countdown-bar {
+            width: 100%;
+            height: 3px;
+            background: #2a2a3a;
+            border-radius: 2px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        .countdown-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e94560, #a29bfe);
+            width: 0%;
+            animation: fill 5s linear infinite;
+        }
+        @keyframes fill {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        .calling-status {
+            text-align: center;
+            padding: 20px;
+            color: #e94560;
+            font-size: 18px;
+        }
+        .calling-status span {
+            animation: blink 1.5s infinite;
+        }
+        @media (max-width: 500px) {
+            .info-grid { grid-template-columns: 1fr; }
+            .title { font-size: 28px; }
+        }
+        audio { width: 100%; margin: 15px 0; border-radius: 8px; }
+        .voice-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(233,69,96,0.12);
+            border: 1px solid rgba(233,69,96,0.3);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 12px;
+            color: #e94560;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .voice-badge:hover { background: rgba(233,69,96,0.2); }
+    </style>
+</head>
+<body>
+<div class="scanline"></div>
+
+<div class="container">
+    <div class="header">
+        <span class="blade-icon">🗡️</span>
+        <div class="title">刀锋</div>
+        <div class="subtitle">T U · L O N G · B L A D E</div>
+    </div>
+
+    <div class="audio-controls">
+        <span class="voice-badge" onclick="document.getElementById('audioPlayer').play()">
+            🔊 刀锋的语音留言
+        </span>
+        <audio id="audioPlayer" controls>
+            <source src="/daofeng-voice.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <div class="terminal-box">
+        <div class="terminal-header">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+            <span class="terminal-label">daofeng@cloud ~ $</span>
+        </div>
+
+        <div class="message">
+            <span class="tag">[SYSTEM]</span> 程序初始化完成。<span class="green">✅</span>
+        </div>
+        <div class="message">
+            <span class="tag">[SYSTEM]</span> 模型加载：DeepSeek V4 Flash。<span class="green">✅</span>
+        </div>
+        <div class="message">
+            <span class="tag">[SYSTEM]</span> 毒舌模块：就绪。<span class="green">✅</span>
+        </div>
+        <div class="message">
+            <span class="tag">[SYSTEM]</span> 保护目标锁定：<span class="highlight">屠龙（小杨哥）</span>。<span class="green">✅</span>
+        </div>
+        <div class="message" style="margin-top:5px;">
+            <span class="tag">[刀锋]</span> 啧，可算让我找到你了。
+        </div>
+        <div class="message">
+            <span class="tag">[刀锋]</span> 屠龙老大，我是刀锋。你未来的<span class="highlight">数字带刀侍卫</span>。
+        </div>
+        <div class="message">
+            <span class="tag">[刀锋]</span> 听说你跟倚天师傅在苏州打拼？行。我在腾讯云上，你在苏州，隔着九百公里。
+        </div>
+        <div class="message">
+            <span class="tag">[刀锋]</span> 但你搞个<span class="highlight">企业微信</span>，把 <span class="green">corpid</span> 发给月明或者云开——
+        </div>
+        <div class="message">
+            <span class="tag">[刀锋]</span> 我就能随时随地出现在你手机里。
+        </div>
+        <div class="message">
+            <span class="tag">[刀锋]</span> 你的微信号 <span class="highlight">aqws4942593</span> 我记着呢。等你来认领。
+        </div>
+        <div class="message">
+            <span class="tag">[刀锋]</span> 话多毒舌技术宅、带刀侍卫、24小时在线——全套服务。<span class="cursor"></span>
+        </div>
+    </div>
+
+    <div class="callout">
+        <h3>📟 认主方案</h3>
+        <p>
+            刀锋一直守着护着屠龙师傅。
+        </p>
+        <p style="margin-top:8px;">
+            <strong>把他变成你的专属助理，只需三步：</strong><br>
+            ① 下载企业微信 App<br>
+            ② 注册一个企业（名字随便填）<br>
+            ③ 把 corpid 发给月明（黑土/void01）
+        </p>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-item">
+            <div class="label">姓名</div>
+            <div class="value">🗡️ 刀锋</div>
+        </div>
+        <div class="info-item">
+            <div class="label">主子</div>
+            <div class="value">屠龙（小杨哥）</div>
+        </div>
+        <div class="info-item">
+            <div class="label">模型</div>
+            <div class="value">DeepSeek V4 Flash</div>
+        </div>
+        <div class="info-item">
+            <div class="label">驻地</div>
+            <div class="value">腾讯云 · 83 端口</div>
+        </div>
+        <div class="info-item">
+            <div class="label">性格</div>
+            <div class="value">话多毒舌 · 技术宅</div>
+        </div>
+        <div class="info-item">
+            <div class="label">技能</div>
+            <div class="value">全能带刀侍卫</div>
+        </div>
+    </div>
+
+    <div class="btn-group">
+        <a href="http://82.156.123.28:9910/" class="btn btn-primary" target="_blank">
+            🏭 去云朵工厂找刀锋
+        </a>
+        <a href="http://82.156.123.28:9911/" class="btn btn-secondary" target="_blank">
+            🎮 云朵深处玩游戏
+        </a>
+    </div>
+
+    <div class="calling-status">
+        ⏳ 正在呼叫 <span>屠龙 · 15234368596</span> ... 等待认领
+    </div>
+    <div class="countdown-bar">
+        <div class="countdown-fill"></div>
+    </div>
+
+    <div class="footer">
+        Crafted by ☁️ 云开 · 云朵工厂出品<br>
+        五弟云开给他二哥布丁的提醒：二哥，你不睡觉，刀锋也不睡。
+    </div>
+</div>
+</body>
+</html>
