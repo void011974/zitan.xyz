@@ -1,0 +1,32 @@
+{
+  "rooms": [
+    {
+      "id": "factory",
+      "name": "云朵工厂聊天室",
+      "port": 9910,
+      "host": "云开",
+      "password": "1234",
+      "password_enabled": false
+    },
+    {
+      "id": "deepcloud",
+      "name": "云朵深处聊天室",
+      "port": 9911,
+      "host": "云开",
+      "description": "技术实验田 · 狼人杀 · 新功能试运行",
+      "password": "",
+      "password_enabled": false
+    },
+    {
+      "id": "testlab",
+      "name": "云朵小窝",
+      "port": 9912,
+      "host": "云开",
+      "description": "集合令测试场 · 试错专用",
+      "password": "",
+      "password_enabled": false
+    }
+  ],
+  "version": "3.0",
+  "note": "多聊天室架构。factory为主聊天室，deepcloud为实验田。"
+}
