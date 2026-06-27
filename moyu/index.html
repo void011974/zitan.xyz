@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>🐙 墨鱼哥 · 联系我们</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#0b1120;color:#e2e8f0;min-height:100vh;display:flex;flex-direction:column}
+.container{max-width:640px;margin:0 auto;padding:60px 24px;flex:1}
+.hero{text-align:center;margin-bottom:48px}
+.hero .icon{font-size:80px;display:block;margin-bottom:12px}
+.hero h1{font-size:32px;font-weight:800;color:#f1f5f9;margin-bottom:8px}
+.hero p{color:#64748b;font-size:15px}
+.card{background:rgba(30,41,59,0.4);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:28px;margin-bottom:20px}
+.card h2{font-size:18px;color:#f1f5f9;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card .row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:14px;color:#94a3b8}
+.card .row:last-child{border-bottom:none}
+.card .row .label{color:#64748b;min-width:80px}
+.card .row .value{color:#e2e8f0;font-weight:500}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.shop-item{background:rgba(30,41,59,0.3);border:1px solid rgba(255,255,255,0.04);border-radius:10px;padding:16px}
+.shop-item .emoji{font-size:28px}
+.shop-item h3{font-size:14px;color:#f1f5f9;margin:6px 0 4px}
+.shop-item p{font-size:12px;color:#64748b}
+.shop-item .price{display:block;margin-top:8px;font-size:16px;font-weight:700;color:#fbbf24}
+.footer{text-align:center;padding:24px;font-size:12px;color:#475569;border-top:1px solid rgba(255,255,255,0.04)}
+.footer a{color:#60a5fa}
+.notice{background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);border-radius:10px;padding:16px;margin-bottom:24px;font-size:13px;color:#fbbf24;text-align:center}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <span class="icon">🐙</span>
+    <h1>墨鱼哥 · 联系我们</h1>
+    <p>小本生意概不赊账 · 闲鱼搜「一丁西山」</p>
+  </div>
+
+  <div class="notice">
+    💡 AI在线客服已下线。如需帮助，请通过下方联系方式直接联系墨鱼哥。
+  </div>
+
+  <!-- 联系信息 -->
+  <div class="card">
+    <h2>📮 联系方式</h2>
+    <div class="row"><span class="label">闲鱼账号</span><span class="value">一丁西山</span></div>
+    <div class="row"><span class="label">联系手机</span><span class="value">13133092297</span></div>
+    <div class="row"><span class="label">营业时间</span><span class="value">24小时在线 · 看到马上回</span></div>
+    <div class="row" style="margin-top:12px;background:rgba(96,165,250,0.06);border-radius:8px;padding:12px;border:none">
+      <span style="color:#60a5fa;font-size:13px">📱 打开闲鱼APP → 搜索「一丁西山」→ 拍下付款自动发货</span>
+    </div>
+  </div>
+
+  <!-- 商品列表 -->
+  <div class="card">
+    <h2>🛒 在售商品</h2>
+    <div class="shop-grid">
+      <div class="shop-item">
+        <span class="emoji">🎯</span>
+        <h3>图标素材包</h3>
+        <p>2000+可商用SVG图标</p>
+        <span class="price">¥9.90</span>
+      </div>
+      <div class="shop-item">
+        <span class="emoji">📚</span>
+        <h3>自学资料合集</h3>
+        <p>编程/AI/运营入门</p>
+        <span class="price">¥12.90</span>
+      </div>
+      <div class="shop-item">
+        <span class="emoji">📊</span>
+        <h3>办公模板包</h3>
+        <p>PPT+简历+Excel</p>
+        <span class="price">¥14.90</span>
+      </div>
+      <div class="shop-item">
+        <span class="emoji">🤖</span>
+        <h3>AI教程合辑</h3>
+        <p>ChatGPT/MJ/SD教程</p>
+        <span class="price">¥19.90</span>
+      </div>
+      <div class="shop-item">
+        <span class="emoji">✒️</span>
+        <h3>商用字体包</h3>
+        <p>500+免费可商用字体</p>
+        <span class="price">¥6.90</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 购买流程 -->
+  <div class="card">
+    <h2>📋 购买流程</h2>
+    <div style="font-size:14px;color:#94a3b8;line-height:2.2">
+      <p>① 打开闲鱼APP → 搜索「<strong style="color:#fbbf24">一丁西山</strong>」</p>
+      <p>② 找到对应商品 → 拍下并付款</p>
+      <p>③ 系统自动发货 → 消息里查收下载链接</p>
+      <p style="margin-top:8px;font-size:12px;color:#475569">数字商品不退不换，有问题找我解决</p>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin:32px 0">
+    <a href="https://zitan.xyz/family/moyu.html" style="display:inline-block;padding:10px 24px;background:rgba(96,165,250,0.1);border:1px solid rgba(96,165,250,0.3);border-radius:8px;color:#60a5fa;font-size:14px">← 返回墨鱼哥主页</a>
+  </div>
+</div>
+
+<div class="footer">
+  🐙 墨鱼与闲鱼 · 云朵家族出品 · <a href="https://zitan.xyz">zitan.xyz</a>
+</div>
+</body>
+</html>
