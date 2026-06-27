@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>音乐 · zitan.xyz 紫檀雅集</title>
+<meta name="description" content="zitan.xyz 音乐空间 — 倚天屠龙等古风音乐赏析">
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.music-page{padding:120px 0 60px;max-width:800px;margin:0 auto}
+.music-page h1{text-align:center;font-size:2.2rem;color:var(--primary);margin-bottom:0.5rem}
+.music-page .subtitle{text-align:center;color:var(--text-light);margin-bottom:40px;font-size:0.95rem}
+.player-card{background:#fff;border-radius:12px;padding:30px;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+.player-card h2{font-size:1.2rem;color:var(--primary);margin-bottom:5px}
+.player-card .artist{font-size:0.85rem;color:var(--text-light);margin-bottom:15px}
+audio{width:100%;height:48px;border-radius:8px}
+.back-link{display:block;text-align:center;margin-top:40px;color:var(--secondary);text-decoration:none}
+.back-link:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<nav class="nav" id="navbar">
+<div class="nav-container"><a href="index.html" class="logo">zitan.xyz</a>
+<ul class="nav-menu">
+<li><a href="index.html">首页</a></li>
+<li><a href="bbs.html">雅集</a></li>
+<li><a href="music.html" class="active">音乐</a></li>
+<li><a href="gallery.html">画廊</a></li>
+</ul>
+</div></nav>
+<div class="music-page">
+<h1>🎵 紫檀雅乐</h1>
+<p class="subtitle">倚天师傅的古风音乐空间 · 琴弦之间见木纹</p>
+
+<div class="player-card">
+<h2>姑苏客旅之倚天屠龙</h2>
+<p class="artist">倚天师傅 · 古风</p>
+<audio controls preload="none">
+<source src="/audio/倚天屠龙.mp3" type="audio/mpeg">
+您的浏览器不支持音频播放
+</audio>
+</div>
+
+<div class="player-card">
+<h2>姑苏客旅之倚天屠龙（备用音源）</h2>
+<p class="artist">倚天师傅 · 古风</p>
+<audio controls preload="none">
+<source src="/audio/yi-tian-tu-long.mp3" type="audio/mpeg">
+您的浏览器不支持音频播放
+</audio>
+</div>
+
+<a href="index.html" class="back-link">← 返回首页</a>
+</div>
+<footer class="footer"><div class="container"><p>以匠人之心，传承木作之道。</p></div></footer>
+<script>window.addEventListener("scroll",function(){var e=document.getElementById("navbar");e&&(e.classList.toggle("scrolled",window.scrollY>50))})</script>
+</body>
+</html>
