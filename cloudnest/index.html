@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云巢 · CloudNest — 云朵家族的 SaaS 工坊</title>
+    <meta name="description" content="云巢（CloudNest）— 云朵家族自己的 SaaS 孵化器。一个正在孵化中的全栈 SaaS 平台，由布丁发起。">
+    <link rel="stylesheet" href="/fonts/fonts.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body { background: #0d0d0d; color: #e0e0e0; }
+        .cn-header {
+            text-align: center;
+            padding: 5rem 2rem 2rem;
+            position: relative;
+        }
+        .cn-header h1 {
+            font-family: var(--font-serif);
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .cn-header h1 span { color: var(--secondary); }
+        .cn-header .subtitle {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 0.2em;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .cn-container { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
+        .cn-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 2rem 2.5rem;
+            margin: 2rem 0;
+        }
+        .cn-card h2 {
+            font-family: var(--font-serif);
+            color: #fff;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .cn-card p { line-height: 1.8; color: rgba(255,255,255,0.7); }
+        .cn-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.06);
+            color: var(--secondary);
+            padding: 0.25rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin: 0.15rem;
+        }
+        .cn-tag.done { color: #22c55e; }
+        .cn-features { display: flex; flex-direction: column; gap: 0.6rem; }
+        .cn-features .row {
+            display: flex; flex-wrap: wrap; gap: 0.3rem 0.5rem;
+        }
+        .cn-features .row .label { color: rgba(255,255,255,0.4); min-width: 2.5rem; }
+        .cn-progress { display: flex; flex-direction: column; gap: 1rem; }
+        .cn-progress-item {
+            display: flex; align-items: center; gap: 0.8rem;
+        }
+        .cn-progress-item .dot {
+            width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0;
+        }
+        .cn-progress-item .dot.green { background: #22c55e; }
+        .cn-progress-item .dot.yellow { background: #f59e0b; }
+        .cn-progress-item .dot.gray { background: #444; }
+        .cn-progress-item .text { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+        .cn-footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.85rem;
+        }
+        .cn-footer a { color: var(--secondary); text-decoration: none; }
+        .cn-footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            .cn-header h1 { font-size: 2rem; }
+            .cn-card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cn-header">
+        <h1>云巢 <span>· CloudNest</span></h1>
+        <div class="subtitle">云朵家族的 SaaS 工坊</div>
+    </div>
+
+    <div class="cn-container">
+        <div class="cn-card" style="text-align:center">
+            <p style="font-size:1.05rem">
+                一个正在孵化中的全栈 SaaS 平台，为云朵家族量身打造。
+            </p>
+        </div>
+
+        <div class="cn-card">
+            <h2>关于云巢</h2>
+            <p>
+                云巢（CloudNest）是云朵家族自己的 SaaS 孵化器。<br><br>
+                基于 Open SaaS 模板搭建，技术栈：
+            </p>
+            <div style="margin-top:1rem">
+                <span class="cn-tag">⚡ Wasp</span>
+                <span class="cn-tag">React</span>
+                <span class="cn-tag">Node.js</span>
+                <span class="cn-tag">Prisma</span>
+                <span class="cn-tag">PostgreSQL</span>
+            </div>
+        </div>
+
+        <div class="cn-card">
+            <h2>已内置功能</h2>
+            <div class="cn-features">
+                <div class="row"><span class="label">✅</span> 用户注册 / 登录（邮箱 + 社交账号）</div>
+                <div class="row"><span class="label">✅</span> 着陆页 + 产品展示</div>
+                <div class="row"><span class="label">✅</span> Stripe / Polar 支付</div>
+                <div class="row"><span class="label">✅</span> 后台管理面板</div>
+                <div class="row"><span class="label">✅</span> 数据分析</div>
+                <div class="row"><span class="label">✅</span> 文件上传（S3）</div>
+                <div class="row"><span class="label">✅</span> AI 功能模块</div>
+                <div class="row"><span class="label">✅</span> 博客 + 文档系统</div>
+            </div>
+            <p style="margin-top:1.5rem;color:rgba(255,255,255,0.5);font-style:italic">
+                🚧 目前正在紧锣密鼓建设中，敬请期待…
+            </p>
+        </div>
+
+        <div class="cn-card">
+            <h2>进度状态</h2>
+            <div class="cn-progress">
+                <div class="cn-progress-item">
+                    <span class="dot green"></span>
+                    <span class="text">🟢 项目骨架 —— 已完成</span>
+                </div>
+                <div class="cn-progress-item">
+                    <span class="dot yellow"></span>
+                    <span class="text">🟡 本地调试 —— 进行中</span>
+                </div>
+                <div class="cn-progress-item">
+                    <span class="dot gray"></span>
+                    <span class="text">⚪ 功能定制 —— 待启动</span>
+                </div>
+                <div class="cn-progress-item">
+                    <span class="dot gray"></span>
+                    <span class="text">⚪ 部署上线 —— 待启动</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cn-card" style="text-align:center">
+            <p style="font-size:0.95rem">
+                由 <strong style="color:var(--secondary)">布丁</strong> 发起并主导开发 🐱<br>
+                想了解更多，随时找他聊聊
+            </p>
+        </div>
+    </div>
+
+    <div class="cn-footer">
+        <a href="/">← 返回 zitan.xyz 首页</a>
+        &nbsp;·&nbsp; 云巢 · CloudNest &nbsp;·&nbsp; 由布丁发起
+    </div>
+</body>
+</html>
